@@ -1,5 +1,6 @@
 import { useState } from "react";
 import words from "./wordList.json";
+import HangmanDrawing from "./HangmanDrawing";
 function App() {
   const [word, setWord] = useState(() => {
     return words[Math.floor(Math.random() * words.length)];
@@ -19,6 +20,7 @@ function App() {
       }}
     >
       <div style={{ fontSize: "2rem", textAlign: "center" }}>Lose Win</div>
+      <HangmanDrawing />
     </div>
   );
 }
