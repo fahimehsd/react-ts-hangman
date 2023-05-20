@@ -12,13 +12,16 @@ function App() {
 
   const incorrectLetters = letters.filter((letter) => !word.includes(letter));
 
+  const loser = incorrectLetters.length >= 6;
+  const winner = word.split("").every((letter) => letters.includes(letter));
+
   const addGuessedLetters = useCallback(
     (letter: string) => {
-      if (letters.includes(letter)) return;
+      if (letters.includes(letter) || loser || winner) return;
 
       setLetters((currentLetters) => [...currentLetters, letter]);
     },
-    [letters]
+    [letters, loser, winner]
   );
 
   useEffect(() => {
@@ -49,10 +52,14 @@ function App() {
         alignItems: "center"
       }}
     >
-      <div style={{ fontSize: "2rem", textAlign: "center" }}>Lose Win</div>
+      <div style={{ fontSize: "2rem", textAlign: "center" }}>
+        {winner && "WINNER! Refresh to try again!"}
+        {loser && "NICE TRY! Refresh to try again!"}
+      </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
-      <HangmanWord letters={letters} word={word} />
+      <HangmanWord reveal={loser} letters={letters} word={word} />
       <Keyboard
+        disabled={winner || loser}
         activeLetters={letters.filter((letter) => word.includes(letter))}
         inactiveLetters={incorrectLetters}
         addGuessedLetters={addGuessedLetters}
