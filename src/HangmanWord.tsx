@@ -16,7 +16,7 @@ const HangmanWord = ({ letters, word }: HangmanWordProps) => {
       }}
     >
       {word.split("").map((letter, index) => (
-        <span style={{ borderBottom: ".1em solid black" }}>
+        <span key={index} style={{ borderBottom: ".1em solid black" }}>
           <span
             style={{
               visibility: letters.includes(letter) ? "visible" : "hidden"
